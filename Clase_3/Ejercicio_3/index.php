@@ -47,11 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // “Error en los datos” si esta mal la clave.   
                 // “Usuario no registrado si no coincide el mail“   
             }
-        
-
         }
     }
-} 
+}
 else 
 {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') 
