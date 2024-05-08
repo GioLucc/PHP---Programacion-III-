@@ -1,6 +1,7 @@
 <?php
 
 require "Producto.php";
+require "Usuario.php";
 // Aplicación No 22 ( Login)
 // Archivo: Login.php
 // método:POST
@@ -13,29 +14,25 @@ require "Producto.php";
 // Hacer los métodos necesarios en la clase usuario.
 
 
-switch ($_SERVER['REQUEST_METHOD']) {
+switch($_SERVER['REQUEST_METHOD']) {
     case 'POST':
-        if (
-            isset($_POST['nombre']) && isset($_POST['tipo'])
-            && isset($_POST['stock']) && isset($_POST['precio'])
-        ) {
-            $nombre = $_POST['nombre'];
+        if (isset($_POST['id']) && isset($_POST['codigoDeBarras']) 
+        && isset($_POST['cantidad'])) 
+        {
+            $nombre = $_POST['nombre'];     
             $tipo = $_POST['tipo'];
             $stock = $_POST['stock'];
             $precio = $_POST['precio'];
-
-            $producto = new Producto($nombre, $tipo, $stock, $precio,3);
-
-            Producto::ActualizarStock($producto);
             
-            if ($resultado) {
+            $producto = new Producto($nombre,$tipo,$stock,$precio);
+            var_dump($producto);
+
+            $resultado = Producto::AltaProducto($producto);
+
+            if($resultado)
+            {
                 echo "Se hizo correctamente";
             }
         }
-        break;
-    case 'GET':
-        switch ($_GET['accion']) {
-            case 'Leer':
-                Producto::LeerProducto();
-        }
+    break;
 }

@@ -20,13 +20,13 @@ switch($_SERVER['REQUEST_METHOD']) {
             $nombre = $_POST['nombre'];
             $clave = $_POST['clave'];
             $mail = $_POST['mail'];
-            $destino = $_FILES["image"]["tmp_name"];
+            // $destino = $_FILES["image"]["tmp_name"];
             
             $usuario = new Usuario($nombre, $clave, $mail);
 
             $resultado = Usuario::AltaUsuario($usuario);
 
-            $usuario->subirImagen($destino);
+            // $usuario->subirImagen($destino);
         }
     break;
     case 'GET':

@@ -1,13 +1,14 @@
 <?php
 
-class Producto{
+class Producto
+{
     private $_nombre;
     private $_tipo;
     private $_codigoDeBarras;
     private $_stock;
     private $_precio;
     private $_id;
-    
+
 
     public function __construct($nombre, $tipo, $stock, $precio, $id = null, $codigoDeBarras = null)
     {
@@ -15,9 +16,8 @@ class Producto{
         $this->_tipo = $tipo;
         $this->_stock = $stock;
         $this->_precio = $precio;
-        $this->_codigoDeBarras = $codigoDeBarras ?? rand(100000, 999999);;
+        $this->_codigoDeBarras = $codigoDeBarras ?? rand(100000, 999999);
         $this->_id = $id ?? rand(1, 10000);
-        
     }
 
     public static function MostrarProducto($usuario)
@@ -31,9 +31,15 @@ class Producto{
 
     public static function AltaProducto($producto)
     {
-        $retorno = false;
-        $listaProductos = Producto::LeerProducto();
-    
+
+        $listaProductos = [];
+        if (!file_exists('productos.json')) {
+            file_put_contents('productos.json', '[]');
+            echo "Se crea el vacio";
+        } else {
+            $listaProductos = json_decode(file_get_contents('productos.json'), true);
+        }
+        // Array asociativo (tipo para JSON)
         $nuevoProducto = [
             'nombre' => $producto->_nombre,
             'tipo' => $producto->_tipo,
@@ -42,48 +48,75 @@ class Producto{
             'id' => $producto->_id,
             'codigoDeBarra' => $producto->_codigoDeBarras
         ];
-    
+
         array_push($listaProductos, $nuevoProducto);
-    
-        $productosJson = json_encode($listaProductos);
-    
-        if (!file_exists('productos.json')) {
-            file_put_contents('productos.json', '[]');
-            echo "Se crea el vacio";
-        }
-    
-        if (file_put_contents('productos.json', $productosJson)) {
-            $retorno = true;
-            
-        }
-    
-        return $retorno;
+
+        return $listaProductos;
     }
 
     public static function LeerProducto()
     {
         $listaProductos = [];
-        if(file_exists('productos.json'))
-        {
-            $productosLeidos = json_decode(file_get_contents('productos.json'),true);
-            
-            foreach ($productosLeidos as $producto) 
-            {
+        if (file_exists('productos.json')) {
+            $productosLeidos = json_decode(file_get_contents('productos.json'), true);
+
+            foreach ($productosLeidos as $producto) {
+                // Objeto para devolver una lista
                 $productoAux = new Producto(
-                    $producto['nombre'],
-                    $producto['tipo'],
-                    $producto['stock'],
-                    $producto['precio'],
-                    $producto['id'],
-                    $producto['codigoDeBarra']
+                    $producto[0],
+                    $producto[1],
+                    $producto[2],
+                    $producto[3],
+                    $producto[4],
+                    $producto[5]
                 );
-                array_push($listaProductos,$productoAux);
+                array_push($listaProductos, $productoAux);
             }
         }
 
         return $listaProductos;
     }
+
+
+    public static function ActualizarStock(Producto $producto)
+    {
+        $productosJson = Producto::VerificarExistencia($producto);
+
+        if($productosJson == null)
+        {
+            $productosJson = Producto::AltaProducto($producto);
+        }
+
+        file_put_contents("productos.json",json_encode($productosJson));
+
+    }
+
+    public static function VerificarExistencia(Producto $productoRecibido)
+    {
+        $banderaComprobacion = null;
+        if($productoRecibido != null && file_exists('productos.json'))
+        {
+            $productosJson = json_decode(file_get_contents("productos.json"),true);
+
+            foreach ($productosJson as $indice => $producto)
+            {
+                if($productoRecibido->Equals($producto['id']))
+                {
+                    $productosJson[$indice]['stock'] += $productoRecibido->_stock;
+                    $banderaComprobacion = true;
+                    break;
+                }
+            }
+        }
+
+        if($banderaComprobacion == true)
+            return $productosJson;
+
+        return $banderaComprobacion;
+    }
+
+    public function Equals($id)
+    {
+        return (int)$this->_id == (int)$id;
+    }
 }
-
-
-?>
