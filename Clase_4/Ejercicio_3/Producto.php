@@ -88,7 +88,6 @@ class Producto
         }
 
         file_put_contents("productos.json",json_encode($productosJson));
-
     }
 
     public static function VerificarExistencia(Producto $productoRecibido)

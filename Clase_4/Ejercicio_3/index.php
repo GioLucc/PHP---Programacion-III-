@@ -15,10 +15,8 @@ require "Producto.php";
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
-        if (
-            isset($_POST['nombre']) && isset($_POST['tipo'])
-            && isset($_POST['stock']) && isset($_POST['precio'])
-        ) {
+        if (isset($_POST['nombre']) && isset($_POST['tipo'])
+        && isset($_POST['stock']) && isset($_POST['precio'])){
             $nombre = $_POST['nombre'];
             $tipo = $_POST['tipo'];
             $stock = $_POST['stock'];

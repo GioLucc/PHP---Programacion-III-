@@ -26,6 +26,25 @@ class Usuario{
         "Fecha de Registro: " . $usuario->_fechaDeRegistro . "<br><br>";
     }
 
+    public static function VerificarUsuario($id)
+    {
+        $banderaExiste = false;
+
+        if($id != null && file_exists("usuarios.json"))
+        {
+            $usuariosJson = json_decode(file_get_contents("usuarios.json"),true);
+
+            foreach ($usuariosJson as $usuarioJson) {
+                // Usuario que recibo creado, contra los usuarios del json decodeado
+                if ($id == $usuarioJson['id']);
+                $banderaExiste = $id;
+                break;
+            }
+        }
+
+        return $banderaExiste;
+    }
+
     public static function AltaUsuario($usuario)
     {
         $usuarios = [];
@@ -51,7 +70,6 @@ class Usuario{
         ];
 
         array_push($usuarios,$nuevoUsuario);
-
         $json = json_encode($usuarios);
 
         if(file_put_contents('usuarios.json', $json))
@@ -60,6 +78,25 @@ class Usuario{
         }
 
         return $retorno;
+    }
+
+    public static function ActualizarUsuario(Usuario $usuario)
+    {
+        $banderaExiste = false;
+        if(Usuario::VerificarUsuario($usuario['id']))
+        {
+            $banderaExiste = true;
+        }
+        else
+        {
+            Usuario::AltaUsuario($usuario);
+        }
+
+        if ($banderaExiste)
+            echo "El usuario ya existe.";
+
+        return $banderaExiste;
+
     }
 
     public function subirImagen($imagenTmpPath)
@@ -97,6 +134,11 @@ class Usuario{
         }
 
         return $listaUsuarios;
+    }
+
+    public function Equals($id)
+    {
+        return (int)$this->_id == (int)$id;
     }
 }
 
