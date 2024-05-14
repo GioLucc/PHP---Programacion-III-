@@ -26,10 +26,13 @@ function AltaProducto($producto)
     return $listaProductos;
 }
 
-function subirImagenAlta($imagenTmpPath, $producto)
+function subirImagenHelado($imagenTmpPath, $producto)
 {
+    $sabor = $producto->getSabor();
+    $tipo = $producto->getTipo();
+
     $carpetaDestino = __DIR__ . '/ImagenesDeHelados/2024/';
-    $nombreImagen = $producto->_sabor . '_' . $producto->_tipo . '.png';
+    $nombreImagen = $sabor . '_' . $tipo . '.jpg';
 
     if (move_uploaded_file($imagenTmpPath, $carpetaDestino . $nombreImagen)) {
         return true;
@@ -38,25 +41,22 @@ function subirImagenAlta($imagenTmpPath, $producto)
     }
 }
 
-function ActualizarStock($producto)
-{   
-    $mensaje = "El producto ya existia, se agrega al stock";
+function DeterminarAltaOActualizacion($producto)
+{
     $sabor = $producto->getSabor();
     $tipo = $producto->getTipo();
 
-    $productosExistente = VerificarExistencia($sabor,$tipo);
-    
-    if ($productosExistente) 
-    {
-        ActualizarStockProducto($producto);
-    }
-    else
-    {
-        $productosExistente = AltaProducto($producto);
+    $productosExistente = VerificarExistencia($sabor, $tipo);
+
+    if ($productosExistente) {
+        $mensaje = "El producto ya existia, se agrega al stock";
+        $listaProductos = ActualizarStockProducto($producto);
+    } else {
+        $listaProductos = AltaProducto($producto);
         $mensaje = "Se da de alta un nuevo producto";
     }
 
-    file_put_contents("heladeria.json", json_encode($productosExistente));
+    file_put_contents("heladeria.json", json_encode($listaProductos));
 
     echo $mensaje;
 }
@@ -81,26 +81,20 @@ function VerificarExistencia($sabor, $tipo)
 
 function ActualizarStockProducto($producto)
 {
-    $sabor = $producto->getSabor();
-    $tipo = $producto->getTipo();
-    $stock = $producto->getStock();
+    if ($producto != null) {
+        $sabor = $producto->getSabor();
+        $tipo = $producto->getTipo();
+        $stock = $producto->getStock();
 
-    $productosJson = json_decode(file_get_contents("heladeria.json"), true);
+        $productosJson = json_decode(file_get_contents("heladeria.json"), true);
 
-    foreach ($productosJson as &$producto) 
-    {
-        if ($producto['sabor'] == $sabor && $producto['tipo'] == $tipo) 
-        {
-            $producto['stock'] += $stock;
-            break;
+        foreach ($productosJson as &$producto) {
+            if ($producto['sabor'] == $sabor && $producto['tipo'] == $tipo) {
+                $producto['stock'] += $stock;
+                break;
+            }
         }
+
+        return $productosJson;
     }
-
-    file_put_contents("heladeria.json", json_encode($productosJson));
 }
-
-
-
-
-
-
