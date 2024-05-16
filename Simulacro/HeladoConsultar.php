@@ -1,10 +1,11 @@
 <?php
 Class HeladoConsultar
 {
-    public static function VerificarExistencia($sabor, $tipo)
+    public static function VerificarExistencia($sabor, $tipo, $stock = null)
     {
         $banderaSabor = false;
         $banderaTipo = false;
+        $banderaStock = false;
         $banderaExiste = "No existe";
         if ($sabor != null && file_exists('heladeria.json')) {
             $productosJson = json_decode(file_get_contents("heladeria.json"), true);
@@ -14,18 +15,30 @@ Class HeladoConsultar
                 {
                     $banderaExiste = "Existe el sabor";
                     $banderaSabor = true;
-    
                 }
+
                 if($producto['tipo'] == $tipo)
                 {
                     $banderaTipo = true;
                     $banderaExiste = "Existe el tipo";
                 }
+
+                if($producto['stock'] > 0)
+                {
+                    $banderaStock = true;
+                }
             }
     
-            if($banderaSabor && $banderaTipo)
+            if($banderaSabor && $banderaTipo && $banderaStock)
             {
-                $banderaExiste = "Existe";
+                $banderaExiste = "Existe y hay stock";
+            }
+            else
+            {
+                if($banderaSabor && $banderaTipo)
+                {
+                    $banderaExiste = "Existe";
+                }
             }
         }
     

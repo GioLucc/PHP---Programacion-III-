@@ -5,6 +5,13 @@ Class Venta
     private $_numeroPedido;
     private $_id;
 
+    public function __construct($fecha, $numeroPedido, $id = null)
+{
+    $this->_fecha = $fecha;
+    $this->_numeroPedido = $numeroPedido;
+    $this->_id = $id;
+}
+
     public function getFecha()
     {
         return $this->_fecha;

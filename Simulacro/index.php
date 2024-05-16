@@ -12,6 +12,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 ) {
                     require_once 'Helado.php';
                     require_once 'HeladeriaAlta.php';
+                    require_once 'Utilidades.php';
 
                     $sabor = $_POST['sabor'];
                     $precio = $_POST['precio'];
@@ -23,7 +24,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $helado = new Helado($sabor, $precio, $tipo, $vaso, $stock);
 
                     HeladeriaAlta::DeterminarAltaOActualizacion($helado);
-                    HeladeriaAlta::subirImagenHelado($dgiestino, $helado);
+                    HeladeriaAlta::subirImagenHelado($destino, $helado);
+                    $ultimoId = Utilidades::EncontrarUltimoId("heladeria.json");
+                    var_dump("El ultimo id es: " . $ultimoId);
+                    
                 } else {
                     echo "if mal";
                 }
@@ -46,9 +50,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 break;
             case "Alta_Venta":
                 if (
-                    isset($_POST['email_usuario']) && isset($_POST['sabor'])&& isset($_POST['tipo'])
-                    && isset($_POST['stock'])
+                    isset($_POST['email_usuario']) && isset($_POST['sabor'])&& isset($_POST['tipo']) && isset($_POST['stock'])
                 ) {
+
+                    $sabor = $_POST['sabor'];
+                    $tipo = $_POST['tipo'];
+                    $stock = $_POST['stock'];
+
+                    $resultado = HeladoConsultar::VerificarExistencia($sabor, $tipo,$stock);
+
+                    if($resultado == "Existe y hay stock")
+                    {
+                        require_once 'AltaVenta.php';
+                    }
                     
                 }
                 else
