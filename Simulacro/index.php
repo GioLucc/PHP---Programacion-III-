@@ -22,8 +22,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
                     $helado = new Helado($sabor, $precio, $tipo, $vaso, $stock);
 
-                    DeterminarAltaOActualizacion($helado);
-                    subirImagenHelado($destino, $helado);
+                    HeladeriaAlta::DeterminarAltaOActualizacion($helado);
+                    HeladeriaAlta::subirImagenHelado($dgiestino, $helado);
                 } else {
                     echo "if mal";
                 }
@@ -38,7 +38,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $sabor = $_POST['sabor'];
                     $tipo = $_POST['tipo'];
 
-                    echo VerificarExistenciaConsulta($sabor, $tipo);
+                    echo HeladoConsultar::VerificarExistencia($sabor, $tipo);
                 } else {
                     echo "if mal";
                 }
@@ -46,9 +46,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 break;
             case "Alta_Venta":
                 if (
-                    isset($_POST['codigo_de_barra']) && isset($_POST['id_usuario'])
-                    && isset($_POST['cantidad'])
+                    isset($_POST['email_usuario']) && isset($_POST['sabor'])&& isset($_POST['tipo'])
+                    && isset($_POST['stock'])
                 ) {
+                    
+                }
+                else
+                {
+                    echo "Hola, else";
                 }
                 break;
         }
