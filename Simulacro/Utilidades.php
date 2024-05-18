@@ -5,9 +5,13 @@ class Utilidades
     {
         if (file_exists($nombreArchivo)) {
             $datosJson = json_decode(file_get_contents($nombreArchivo), true);
-            $ultimoProducto = end($datosJson);
-            return $ultimoProducto['id'];
+            if (!empty($datosJson)) {
+                $ultimoProducto = end($datosJson);
+                if (isset($ultimoProducto['id'])) {
+                    return $ultimoProducto['id'] + 1;
+                }
+            }
         }
-        return null;
+        return 1;
     }
 }

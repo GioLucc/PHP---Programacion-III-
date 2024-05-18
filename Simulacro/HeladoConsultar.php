@@ -23,7 +23,7 @@ Class HeladoConsultar
                     $banderaExiste = "Existe el tipo";
                 }
 
-                if($producto['stock'] > 0)
+                if($producto['stock'] >= $stock)
                 {
                     $banderaStock = true;
                 }

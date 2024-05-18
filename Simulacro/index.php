@@ -15,10 +15,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     require_once 'Utilidades.php';
 
                     $sabor = $_POST['sabor'];
-                    $precio = $_POST['precio'];
+                    $precio = floatval($_POST['precio']);
                     $tipo = $_POST['tipo'];
                     $vaso = $_POST['vaso'];
-                    $stock = $_POST['stock'];
+                    $stock = intval($_POST['stock']);
                     $destino = $_FILES["image"]["tmp_name"];
 
                     $helado = new Helado($sabor, $precio, $tipo, $vaso, $stock);
@@ -50,18 +50,26 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 break;
             case "Alta_Venta":
                 if (
-                    isset($_POST['email_usuario']) && isset($_POST['sabor'])&& isset($_POST['tipo']) && isset($_POST['stock'])
+                    isset($_POST['email_usuario']) && isset($_POST['sabor'])
+                    && isset($_POST['tipo']) && isset($_POST['stock'])
                 ) {
+                    require_once 'HeladoConsultar.php';
 
                     $sabor = $_POST['sabor'];
                     $tipo = $_POST['tipo'];
-                    $stock = $_POST['stock'];
+                    $stock = intval($_POST['stock']);
 
                     $resultado = HeladoConsultar::VerificarExistencia($sabor, $tipo,$stock);
 
                     if($resultado == "Existe y hay stock")
                     {
+                        #TODO: Si no hay stock no restar
                         require_once 'AltaVenta.php';
+                        require_once 'HeladeriaAlta.php';
+
+                        AltaVenta::EscribirVenta();
+                        HeladeriaAlta::DescontarStockProducto($sabor,$tipo,$stock);
+
                     }
                     
                 }

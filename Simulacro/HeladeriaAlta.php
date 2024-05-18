@@ -47,12 +47,13 @@ class HeladeriaAlta
     {
         $sabor = $producto->getSabor();
         $tipo = $producto->getTipo();
+        $stock = $producto->getStock();
 
         $productosExistente = HeladeriaAlta::VerificarExistencia($sabor, $tipo);
 
         if ($productosExistente) {
             $mensaje = "El producto ya existia, se agrega al stock";
-            $listaProductos = HeladeriaAlta::ActualizarStockProducto($producto);
+            $listaProductos = HeladeriaAlta::AgregarStockProducto($sabor,$tipo,$stock);
         } else {
             $listaProductos = HeladeriaAlta::AltaProducto($producto);
             $mensaje = "Se da de alta un nuevo producto";
@@ -81,12 +82,9 @@ class HeladeriaAlta
         return $banderaComprobacion;
     }
 
-    public static function ActualizarStockProducto($producto)
+    public static function AgregarStockProducto($sabor,$tipo,$stock)
     {
-        if ($producto != null) {
-            $sabor = $producto->getSabor();
-            $tipo = $producto->getTipo();
-            $stock = $producto->getStock();
+        if ($sabor != null && $tipo == null && $stock == null) {
 
             $productosJson = json_decode(file_get_contents("heladeria.json"), true);
 
@@ -98,6 +96,23 @@ class HeladeriaAlta
             }
 
             return $productosJson;
+        }
+    }
+
+    public static function DescontarStockProducto($sabor,$tipo,$stock)
+    {
+        if ($sabor != null && $tipo != null && $stock != null) {
+
+            $productosJson = json_decode(file_get_contents("heladeria.json"), true);
+
+            foreach ($productosJson as &$producto) {
+                if ($producto['sabor'] == $sabor && $producto['tipo'] == $tipo) {
+                    $producto['stock'] -= $stock;
+                    break;
+                }
+            }
+
+            file_put_contents("heladeria.json", json_encode($productosJson));
         }
     }
 }
