@@ -25,9 +25,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
                     HeladeriaAlta::DeterminarAltaOActualizacion($helado);
                     HeladeriaAlta::subirImagenHelado($destino, $helado);
-                    $ultimoId = Utilidades::EncontrarUltimoId("heladeria.json");
-                    var_dump("El ultimo id es: " . $ultimoId);
-                    
+
                 } else {
                     echo "if mal";
                 }
@@ -52,29 +50,30 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 if (
                     isset($_POST['email_usuario']) && isset($_POST['sabor'])
                     && isset($_POST['tipo']) && isset($_POST['stock'])
+                    && isset($_FILES["image"])
                 ) {
                     require_once 'HeladoConsultar.php';
 
                     $sabor = $_POST['sabor'];
                     $tipo = $_POST['tipo'];
                     $stock = intval($_POST['stock']);
+                    $email_usuario = $_POST['email_usuario'];
+                    $destino = $_FILES["image"]["tmp_name"];
 
-                    $resultado = HeladoConsultar::VerificarExistencia($sabor, $tipo,$stock);
+                    $resultado = HeladoConsultar::VerificarExistencia($sabor, $tipo, $stock);
 
-                    if($resultado == "Existe y hay stock")
-                    {
+                    if ($resultado == "Existe y hay stock") {
                         #TODO: Si no hay stock no restar
                         require_once 'AltaVenta.php';
                         require_once 'HeladeriaAlta.php';
 
                         AltaVenta::EscribirVenta();
-                        HeladeriaAlta::DescontarStockProducto($sabor,$tipo,$stock);
+                        HeladeriaAlta::DescontarStockProducto($sabor, $tipo, $stock);
+                        $usuario = Utilidades::ObtenerUsuarioMail($email_usuario);
+                        AltaVenta::subirImagenVenta($destino,$sabor,$tipo,$usuario);
 
                     }
-                    
-                }
-                else
-                {
+                } else {
                     echo "Hola, else";
                 }
                 break;

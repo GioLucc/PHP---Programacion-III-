@@ -14,4 +14,14 @@ class Utilidades
         }
         return 1;
     }
+
+    public static function ObtenerUsuarioMail($mail)
+    {
+        $posicionArroba = strpos($mail, '@');
+        if ($posicionArroba !== false) {
+            return substr($mail, 0, $posicionArroba);
+        } else {
+            return $mail;
+        }
+    }
 }
