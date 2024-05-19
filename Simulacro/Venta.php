@@ -1,5 +1,4 @@
 <?php
-require "Utilidades.php";
 class Venta
 {
     private $_fecha;
@@ -8,10 +7,10 @@ class Venta
 
     public function __construct($numeroPedido= null, $id = null,$fecha = null)
     {
-
+        require_once "Utilidades.php";
         if ($fecha === null) {
             $fecha = new DateTime();
-            $fecha = $fecha->format('Y-m-d H:i:s');
+            $fecha = $fecha->format('d-m-Y');
         }
 
         $this->_fecha = $fecha;

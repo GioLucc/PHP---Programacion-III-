@@ -1,7 +1,7 @@
 <?php
 class AltaVenta
 {
-    public static function EscribirVenta()
+    public static function EscribirVenta($usuario,$sabor,$vaso)
     {
         require_once "Venta.php";
         $listaVentas = [];
@@ -19,6 +19,9 @@ class AltaVenta
             'fecha' => $ventaCreada->getFecha(),
             'numeroDePedido' => $ventaCreada->getNumeroPedido(),
             'id' => $ventaCreada->getId(),
+            'usuario' => $usuario,
+            'sabor' => $sabor,
+            'vaso' => $vaso
         ];
 
         array_push($listaVentas, $nuevaVenta);

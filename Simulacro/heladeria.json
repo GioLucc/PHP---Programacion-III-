@@ -1,1 +1,1 @@
-[{"sabor":"Limon","precio":1400,"tipo":"Crema","vaso":"Plastico","stock":5,"id":38},{"sabor":"Chocolate","precio":1400,"tipo":"Crema","vaso":"Plastico","stock":6,"id":45},{"sabor":"Menta Granizada","precio":1400,"tipo":"Crema","vaso":"Plastico","stock":1,"id":1}]
+[{"sabor":"Limon","precio":1400,"tipo":"Crema","vaso":"Plastico","stock":5,"id":38},{"sabor":"Chocolate","precio":1400,"tipo":"Crema","vaso":"Plastico","stock":-4,"id":45},{"sabor":"Menta Granizada","precio":1400,"tipo":"Crema","vaso":"Plastico","stock":1,"id":1}]

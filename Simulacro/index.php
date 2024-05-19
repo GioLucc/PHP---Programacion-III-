@@ -12,7 +12,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 ) {
                     require_once 'Helado.php';
                     require_once 'HeladeriaAlta.php';
-                    require_once 'Utilidades.php';
 
                     $sabor = $_POST['sabor'];
                     $precio = floatval($_POST['precio']);
@@ -25,16 +24,14 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
                     HeladeriaAlta::DeterminarAltaOActualizacion($helado);
                     HeladeriaAlta::subirImagenHelado($destino, $helado);
-
                 } else {
                     echo "if mal";
                 }
-                break;
+            break;
             case "Consulta_Helado":
                 if (
                     isset($_POST['sabor']) && isset($_POST['tipo'])
                 ) {
-
                     require_once 'HeladoConsultar.php';
 
                     $sabor = $_POST['sabor'];
@@ -45,39 +42,63 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     echo "if mal";
                 }
 
-                break;
+            break;
             case "Alta_Venta":
                 if (
                     isset($_POST['email_usuario']) && isset($_POST['sabor'])
                     && isset($_POST['tipo']) && isset($_POST['stock'])
-                    && isset($_FILES["image"])
+                    && isset($_FILES["image"]) && isset($_POST['vaso'])
                 ) {
                     require_once 'HeladoConsultar.php';
 
                     $sabor = $_POST['sabor'];
                     $tipo = $_POST['tipo'];
                     $stock = intval($_POST['stock']);
+                    $vaso = ($_POST['vaso']);
                     $email_usuario = $_POST['email_usuario'];
                     $destino = $_FILES["image"]["tmp_name"];
+
 
                     $resultado = HeladoConsultar::VerificarExistencia($sabor, $tipo, $stock);
 
                     if ($resultado == "Existe y hay stock") {
                         #TODO: Si no hay stock no restar
                         require_once 'AltaVenta.php';
+                        require_once 'Utilidades.php';
                         require_once 'HeladeriaAlta.php';
 
-                        AltaVenta::EscribirVenta();
-                        HeladeriaAlta::DescontarStockProducto($sabor, $tipo, $stock);
                         $usuario = Utilidades::ObtenerUsuarioMail($email_usuario);
-                        AltaVenta::subirImagenVenta($destino,$sabor,$tipo,$usuario);
-
+                        AltaVenta::EscribirVenta($usuario, $sabor, $vaso);
+                        HeladeriaAlta::DescontarStockProducto($sabor, $tipo, $stock);
+                        AltaVenta::subirImagenVenta($destino, $sabor, $tipo, $usuario);
                     }
                 } else {
                     echo "Hola, else";
                 }
+            break;
+        }
+    break;
+    case 'GET':
+        switch ($_GET['accion']) {
+            case "Consultar_Ventas":
+                require_once 'ConsultarVentas.php';
+                if (isset($_GET['fecha'])) 
+                {
+                    $fecha = $_GET['fecha'];
+                    var_dump(ConsultarVentas::ObtenerVentasPorFecha($fecha, "ventas.json"));
+                } 
+                elseif(isset($_GET['usuario'])) {
+                    $usuario = $_GET['usuario'];
+                        var_dump(ConsultarVentas::ObtenerVentasPorUsuario($usuario,"ventas.json"));
+                }
+                elseif(isset($_GET['fechaUno']) && isset($_GET['fechaDos']))
+                {
+                    
+                }
+                break;
+            default:
+                echo "Acción no reconocida.";
                 break;
         }
-
-        break;
+    break;
 }
