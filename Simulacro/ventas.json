@@ -157,7 +157,7 @@
         "id": 20,
         "usuario": "giolucarna",
         "sabor": "Chocolate",
-        "vaso": "Cucurucho"
+        "vaso": "Plastico"
     },
     {
         "fecha": "20-05-2024",
@@ -165,6 +165,14 @@
         "id": 21,
         "usuario": "giolucarna",
         "sabor": "Chocolate",
+        "vaso": "Plastico"
+    },
+    {
+        "fecha": "19-05-2024",
+        "numeroDePedido": "1664a701828851",
+        "id": 22,
+        "usuario": "giolucarna",
+        "sabor": "Menta Granizada",
         "vaso": "Cucurucho"
     }
 ]

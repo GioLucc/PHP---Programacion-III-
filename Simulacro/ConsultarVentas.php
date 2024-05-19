@@ -47,6 +47,38 @@ class ConsultarVentas
             return $ventasDeUsuario;
         }
     }
+    public static function ObtenerVentasPorVaso($vaso, $archivo)
+    {
+        if (file_exists($archivo)) {
+            $ventasDeUsuario = array();
+
+            $jsonString = json_decode(file_get_contents($archivo), true);
+
+            foreach ($jsonString as $ventas) {
+                if ($ventas['vaso'] == $vaso) {
+                    array_push($ventasDeUsuario, $ventas);
+                }
+            }
+
+            return $ventasDeUsuario;
+        }
+    }
+    public static function ObtenerVentasPorSabor($sabor, $archivo)
+    {
+        if (file_exists($archivo)) {
+            $ventasDeUsuario = array();
+
+            $jsonString = json_decode(file_get_contents($archivo), true);
+
+            foreach ($jsonString as $ventas) {
+                if ($ventas['sabor'] == $sabor) {
+                    array_push($ventasDeUsuario, $ventas);
+                }
+            }
+
+            return $ventasDeUsuario;
+        }
+    }
 
     public static function ObtenerVentasPorFechasOrdenadasNombre($fechaUno,$fechaDos,$archivo)
     {

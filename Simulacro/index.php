@@ -87,10 +87,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $fecha = $_GET['fecha'];
                     var_dump(ConsultarVentas::ObtenerVentasPorFecha($fecha, "ventas.json"));
                 } 
-                elseif(isset($_GET['usuario'])) {
-                    $usuario = $_GET['usuario'];
-                        var_dump(ConsultarVentas::ObtenerVentasPorUsuario($usuario,"ventas.json"));
-                }
                 elseif(isset($_GET['fechaUno']) && isset($_GET['fechaDos']))
                 {
                     $fechaUno = $_GET['fechaUno'];
@@ -98,6 +94,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
                     var_dump(ConsultarVentas::ObtenerVentasPorFechasOrdenadasNombre($fechaUno,$fechaDos,"ventas.json"));
                 }
+                elseif(isset($_GET['usuario'])) {
+                    $usuario = $_GET['usuario'];
+                        var_dump(ConsultarVentas::ObtenerVentasPorUsuario($usuario,"ventas.json"));
+                }
+                elseif(isset($_GET['sabor'])) {
+                    $sabor = $_GET['sabor'];
+                        var_dump(ConsultarVentas::ObtenerVentasPorSabor($sabor,"ventas.json"));
+                }
+                elseif(isset($_GET['vaso'])) {
+                    $vaso = $_GET['vaso'];
+                        var_dump(ConsultarVentas::ObtenerVentasPorVaso($vaso,"ventas.json"));
+                }
+                
                 break;
             default:
                 echo "Acción no reconocida.";

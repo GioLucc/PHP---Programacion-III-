@@ -84,7 +84,7 @@ class HeladeriaAlta
 
     public static function AgregarStockProducto($sabor,$tipo,$stock)
     {
-        if ($sabor != null && $tipo == null && $stock == null) {
+        if ($sabor != null && $tipo != null && $stock != null) {
 
             $productosJson = json_decode(file_get_contents("heladeria.json"), true);
 
