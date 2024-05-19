@@ -52,17 +52,22 @@ class ConsultarVentas
     {
         if (file_exists($archivo)) {
             $ventasDeLaFecha = array();
-
             $jsonString = json_decode(file_get_contents($archivo), true);
 
-            if (!empty($fecha)) {
-                var_dump("Fecha no vacia");
+            if (!empty($fechaUno) && !empty($fechaDos)) 
+            {
+                require_once 'Utilidades.php';
                 foreach ($jsonString as $ventas) {
-                    if ($ventas['fecha'] == $fechaUno || $ventas['fecha'] == $fechaDos) {
+                    if (Utilidades::estaEnRangoDeFechas($ventas['fecha'],$fechaUno,$fechaDos))
+                    {
                         array_push($ventasDeLaFecha, $ventas);
                     }
                 }
             }
+
+            usort($ventasDeLaFecha, function($a, $b) {
+                return strcmp($a['usuario'], $b['usuario']);
+            });
 
             return $ventasDeLaFecha;
         }

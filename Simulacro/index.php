@@ -93,7 +93,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 }
                 elseif(isset($_GET['fechaUno']) && isset($_GET['fechaDos']))
                 {
-                    
+                    $fechaUno = $_GET['fechaUno'];
+                    $fechaDos = $_GET['fechaDos'];
+
+                    var_dump(ConsultarVentas::ObtenerVentasPorFechasOrdenadasNombre($fechaUno,$fechaDos,"ventas.json"));
                 }
                 break;
             default:

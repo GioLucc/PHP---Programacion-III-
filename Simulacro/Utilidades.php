@@ -24,5 +24,9 @@ class Utilidades
             return $mail;
         }
     }
+
+    public static function estaEnRangoDeFechas($fecha, $fechaUno, $fechaDos)
+    {
+        return $fecha >= $fechaUno && $fecha <= $fechaDos;
+    }
 }
-?>

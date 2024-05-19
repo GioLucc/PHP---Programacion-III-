@@ -3,7 +3,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "1664856d7cd4ea",
         "id": 1,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -11,7 +11,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "1664856dc24219",
         "id": 2,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -19,7 +19,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "1664857042bd9e",
         "id": 3,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -27,7 +27,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "16648572935fd6",
         "id": 4,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -35,7 +35,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "16648573be0c12",
         "id": 5,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -43,7 +43,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "16648575129484",
         "id": 6,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -51,7 +51,7 @@
         "fecha": "18-05-2024",
         "numeroDePedido": "16648576599abb",
         "id": 7,
-        "usuario": "giolucarna",
+        "usuario": "Nicolas",
         "sabor": "Chocolate",
         "vaso": "Cucurucho"
     },
@@ -152,7 +152,7 @@
         "vaso": "Cucurucho"
     },
     {
-        "fecha": "19-05-2024",
+        "fecha": "20-05-2024",
         "numeroDePedido": "16649fa715e26b",
         "id": 20,
         "usuario": "giolucarna",
@@ -160,7 +160,7 @@
         "vaso": "Cucurucho"
     },
     {
-        "fecha": "19-05-2024",
+        "fecha": "20-05-2024",
         "numeroDePedido": "16649fa721b511",
         "id": 21,
         "usuario": "giolucarna",
