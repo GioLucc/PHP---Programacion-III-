@@ -174,5 +174,37 @@
         "usuario": "giolucarna",
         "sabor": "Menta Granizada",
         "vaso": "Cucurucho"
+    },
+    {
+        "fecha": "20-05-2024",
+        "numeroDePedido": "1664a7f09b76c5",
+        "id": 23,
+        "usuario": "giolucarna",
+        "sabor": "Menta Granizada",
+        "vaso": "Cucurucho",
+        "nombre": "Nicolas",
+        "cantidad": 1
+    },
+    {
+        "fecha": "20-05-2024",
+        "numeroDePedido": "1664a8388dff82",
+        "id": 24,
+        "usuario": "giolucarna@gmail.com",
+        "sabor": "Limon",
+        "vaso": "Cucurucho",
+        "nombre": "Giovanni",
+        "cantidad": 1
+    },
+    {
+        "fecha": "20-05-2024",
+        "numeroDePedido": "1664a843e382a8",
+        "id": 25,
+        "email": "giolucarna@gmail.com",
+        "sabor": "Ortaliza",
+        "vaso": "Plastico",
+        "nombre": "Nicole Neuman",
+        "cantidad": "999",
+        "emailUsuario": "francofegagi@gmail.com",
+        "tipo": "Crema"
     }
 ]
