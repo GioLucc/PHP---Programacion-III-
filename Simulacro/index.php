@@ -144,6 +144,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 }
 
                 break;
+            case "Consultas_Devoluciones":
+                require_once 'ConsultasDevoluciones.php';
+                ConsultaDevoluciones::ListarDevolucionesConCupones();
+                ConsultaDevoluciones::ListarCuponesYEstados();
+                ConsultaDevoluciones::ListarDevolucionesConCuponesYEstados();
+                
+                break;
             default:
                 echo "Acción no reconocida.";
                 break;
