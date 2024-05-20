@@ -1,7 +1,7 @@
 <?php
 class AltaVenta
 {
-    public static function EscribirVenta($email,$sabor,$vaso,$tipo,$nombre,$cantidad)
+    public static function EscribirVenta($email,$nombre,$helado,$descuentoCupon = 0)
     {
         require_once "Venta.php";
         $listaVentas = [];
@@ -11,7 +11,19 @@ class AltaVenta
         } else {
             $listaVentas = json_decode(file_get_contents('ventas.json'), true);
         }
+        require_once 'Helado.php';
 
+        $stockHelado = $helado->getStock();
+        $precioHelado = $helado->getPrecio();
+
+        $importeFinal = $precioHelado * $stockHelado;
+
+        if($descuentoCupon > 0)
+        {
+            $descuento = $importeFinal * $descuentoCupon / 100;
+            $importeFinal = $importeFinal - $descuento;
+
+        }
         $ventaCreada = new Venta();
         
         // Array asociativo (tipo para JSON)
@@ -20,11 +32,13 @@ class AltaVenta
             'numeroDePedido' => $ventaCreada->getNumeroPedido(),
             'id' => $ventaCreada->getId(),
             'email' => $email,
-            'sabor' => $sabor,
-            'tipo' => $tipo,
-            'vaso' => $vaso,
             'nombre' => $nombre,
-            'cantidad' => $cantidad,
+            'sabor' => $helado-> getSabor(),
+            'tipo' => $helado-> getTipo(),
+            'vaso' => $helado-> getVaso(),
+            'cantidad' => $stockHelado,
+            'importeFinal' => $importeFinal,
+            'descuentoCupon' => $descuentoCupon, 
         ];
 
         array_push($listaVentas, $nuevaVenta);

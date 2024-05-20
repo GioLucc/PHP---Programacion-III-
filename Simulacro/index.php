@@ -48,7 +48,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     isset($_POST['email_usuario']) && isset($_POST['sabor'])
                     && isset($_POST['tipo']) && isset($_POST['stock'])
                     && isset($_FILES["image"]) && isset($_POST['vaso'])
-                    && isset($_POST['nombre'])
+                    && isset($_POST['nombre'])&& isset($_POST['idCupon']) 
                 ) {
                     require_once 'HeladoConsultar.php';
 
@@ -59,21 +59,35 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     $emailUsuario = $_POST['email_usuario'];
                     $nombre = $_POST['nombre'];
                     $destino = $_FILES["image"]["tmp_name"];
+                    $idCupon = intval($_POST['idCupon']);
 
 
                     $resultado = HeladoConsultar::VerificarExistencia($sabor, $tipo, $stock);
-                    echo $resultado;
+                    
 
                     if ($resultado == "Existe y hay stock") {
                         #TODO: Si no hay stock no restar
                         require_once 'AltaVenta.php';
                         require_once 'Utilidades.php';
                         require_once 'HeladeriaAlta.php';
+                        require_once 'CuponDescuento.php';
+                        
+                        $descuentoCupon = CuponDescuento::VerificarCupon($idCupon);
 
-                        AltaVenta::EscribirVenta($emailUsuario, $sabor, $vaso,$tipo, $nombre, $stock);
+                        $helado = HeladeriaAlta::EncontrarUnHelado($sabor,$tipo);
+                        if($descuentoCupon > 0)
+                        {
+                            AltaVenta::EscribirVenta($emailUsuario, $nombre,$helado,$descuentoCupon);
+                            CuponDescuento::CambiarEstadoCupon($idCupon);
+                        }
+                        else
+                        {
+                            AltaVenta::EscribirVenta($emailUsuario, $nombre,$helado);
+                        }
                         $usuario = Utilidades::ObtenerUsuarioMail($emailUsuario);
                         HeladeriaAlta::DescontarStockProducto($sabor, $tipo, $stock);
                         AltaVenta::subirImagenVenta($destino, $sabor, $tipo,$vaso, $usuario);
+
                     }
                 } else {
                     echo "Hola, else";

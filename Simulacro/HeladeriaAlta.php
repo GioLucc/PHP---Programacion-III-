@@ -115,4 +115,31 @@ class HeladeriaAlta
             file_put_contents("heladeria.json", json_encode($productosJson));
         }
     }
+
+    public static function EncontrarUnHelado($sabor,$tipo)
+    {
+        $retorno = null;
+        if ($sabor != null && $tipo != null) {
+
+            $productosJson = json_decode(file_get_contents("heladeria.json"), true);
+
+            foreach ($productosJson as $producto) {
+                if ($producto['sabor'] == $sabor && $producto['tipo'] == $tipo) {
+                    $retorno = new Helado(
+                        $producto['sabor'],
+                        $producto['precio'],
+                        $producto['tipo'],
+                        $producto['vaso'],
+                        $producto['stock'],
+                        $producto['id'],
+                    );
+                    break;
+                }
+            }
+
+            return $retorno;
+        }
+    }
+
+
 }

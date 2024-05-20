@@ -78,4 +78,38 @@ class CuponDescuento
         file_put_contents("cupones.json", json_encode($listaCupones));
     }
 
+    public static function VerificarCupon($idCupon)
+    {
+        $cuponValido = 0;
+        if (file_exists('cupones.json')) 
+        {
+            $listaCupones = json_decode(file_get_contents('cupones.json'), true);
+            foreach ($listaCupones as $cupon) {
+                if($cupon['id'] == $idCupon && $cupon['estado'] == "no usado")
+                {
+                    $cuponValido = $cupon['porcentajeDescuento'];
+                    echo "El cupon es valido";
+                } 
+            }
+        }
+        return $cuponValido;
+    }
+
+    public static function CambiarEstadoCupon($idCupon)
+    {
+        if (file_exists('cupones.json')) 
+        {
+            $listaCupones = json_decode(file_get_contents('cupones.json'), true);
+            foreach ($listaCupones as &$cupon) {
+                if($cupon['id'] == $idCupon)
+                {
+                    $cupon['estado'] = "usado";
+                    break;
+                } 
+            }
+            file_put_contents("cupones.json", json_encode($listaCupones));
+        }
+        
+    }
+
 }
