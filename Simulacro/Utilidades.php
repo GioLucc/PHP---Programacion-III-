@@ -29,4 +29,22 @@ class Utilidades
     {
         return $fecha >= $fechaUno && $fecha <= $fechaDos;
     }
+
+    public static function VerificarExistenciaEnArchivo($dato, $clave, $archivo) {
+        if (file_exists($archivo)) {
+            $jsonString = json_decode(file_get_contents($archivo),true);
+
+            foreach ($jsonString as $item) {
+                if (isset($item[$clave]) && $item[$clave] == $dato) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function generarNumeroPedido() 
+    {
+        return uniqid(true);
+    }
 }

@@ -14,14 +14,11 @@ class Venta
         }
 
         $this->_fecha = $fecha;
-        $this->_numeroPedido = Venta::generarNumeroPedido();
+        $this->_numeroPedido = Utilidades::generarNumeroPedido();
         $this->_id = Utilidades::EncontrarUltimoId("ventas.json");
     }
 
-    private static function generarNumeroPedido() 
-    {
-        return uniqid(true);
-    }
+    
 
     public function getFecha()
     {

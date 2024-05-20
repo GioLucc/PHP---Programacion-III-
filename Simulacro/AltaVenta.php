@@ -34,7 +34,6 @@ class AltaVenta
     public static function subirImagenVenta($imagenTmpPath,$sabor,$tipo,$nombreUsuario)
     {
 
-
         $carpetaDestino = __DIR__ . '/ImagenesDeLaVenta/2024/';
         $nombreImagen = $sabor . '_' . $tipo . '_' . $nombreUsuario . '.jpg';
 

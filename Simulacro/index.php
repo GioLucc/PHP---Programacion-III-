@@ -80,6 +80,31 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     echo "Hola, else";
                 }
                 break;
+            case "Devolver_Helado":
+                if (
+                    isset($_POST['numeroDePedido']) && isset($_POST['causaDevolucion']))
+                    {
+                        require_once 'Utilidades.php';
+                        $numeroPedido = $_POST['numeroDePedido'];
+                        // $destino = $_FILES["image"]["tmp_name"];
+                        $causaDevolucion = $_POST['causaDevolucion'];
+
+                        $resultadoExistencia = Utilidades::VerificarExistenciaEnArchivo($numeroPedido,"numeroDePedido","ventas.json");
+
+                        echo $resultadoExistencia;
+
+                        if($resultadoExistencia)
+                        {
+                            require_once "DevolverHelado.php";
+                            require_once "CuponDescuento.php";
+                            $idDevolucion = Utilidades::generarNumeroPedido();
+                            $nuevoCupon = new CuponDescuento(10,$idDevolucion);
+                            DevolverHelado::DevolverUnHelado($numeroPedido
+                            ,$causaDevolucion,$idDevolucion);
+                            CuponDescuento::RegistrarCupones($nuevoCupon);
+                        }
+                    }
+                break;
         }
         break;
     case 'GET':
