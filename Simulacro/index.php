@@ -50,7 +50,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
                     && isset($_FILES["image"]) && isset($_POST['vaso'])
                     && isset($_POST['nombre'])
                 ) {
-                    echo "entra venta";
                     require_once 'HeladoConsultar.php';
 
                     $sabor = $_POST['sabor'];
@@ -71,10 +70,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         require_once 'Utilidades.php';
                         require_once 'HeladeriaAlta.php';
 
-                        AltaVenta::EscribirVenta($emailUsuario, $sabor, $vaso, $nombre, $stock);
+                        AltaVenta::EscribirVenta($emailUsuario, $sabor, $vaso,$tipo, $nombre, $stock);
                         $usuario = Utilidades::ObtenerUsuarioMail($emailUsuario);
                         HeladeriaAlta::DescontarStockProducto($sabor, $tipo, $stock);
-                        AltaVenta::subirImagenVenta($destino, $sabor, $tipo, $usuario);
+                        AltaVenta::subirImagenVenta($destino, $sabor, $tipo,$vaso, $usuario);
                     }
                 } else {
                     echo "Hola, else";
@@ -159,6 +158,22 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 } else {
                     echo "isset";
                 }
+            break;
+        }
+        break;
+    case 'DELETE':
+        switch ($_GET['accion']) {
+            case "Borrar_Venta":
+                if (isset($_GET['numeroDePedido']))
+                    {
+                        $numeroPedido = $_GET['numeroDePedido'];
+                        require_once 'BorrarVenta.php';
+                        $resultado = BorrarVenta::BorrarVenta($numeroPedido,"ventas.json");
+                        if ($resultado == true)
+                            echo "Borrado satisfactoriamente";
+
+                    }
+
             break;
         }
         break;

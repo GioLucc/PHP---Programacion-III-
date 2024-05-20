@@ -1,7 +1,7 @@
 <?php
 class AltaVenta
 {
-    public static function EscribirVenta($email,$sabor,$vaso,$nombre,$cantidad)
+    public static function EscribirVenta($email,$sabor,$vaso,$tipo,$nombre,$cantidad)
     {
         require_once "Venta.php";
         $listaVentas = [];
@@ -21,6 +21,7 @@ class AltaVenta
             'id' => $ventaCreada->getId(),
             'email' => $email,
             'sabor' => $sabor,
+            'tipo' => $tipo,
             'vaso' => $vaso,
             'nombre' => $nombre,
             'cantidad' => $cantidad,
@@ -31,11 +32,11 @@ class AltaVenta
         file_put_contents("ventas.json", json_encode($listaVentas));
     }
 
-    public static function subirImagenVenta($imagenTmpPath,$sabor,$tipo,$nombreUsuario)
+    public static function subirImagenVenta($imagenTmpPath,$sabor,$tipo,$vaso,$nombreUsuario)
     {
 
         $carpetaDestino = __DIR__ . '/ImagenesDeLaVenta/2024/';
-        $nombreImagen = $sabor . '_' . $tipo . '_' . $nombreUsuario . '.jpg';
+        $nombreImagen = $sabor . '_' . $tipo . '_' . $vaso . '_' . $nombreUsuario .  '.jpg';
 
         if (move_uploaded_file($imagenTmpPath, $carpetaDestino . $nombreImagen)) {
             return true;
